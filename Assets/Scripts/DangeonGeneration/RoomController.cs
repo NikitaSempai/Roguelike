@@ -21,6 +21,7 @@ public class RoomController : MonoBehaviour
     Queue<RoomInfo> loadRoomQueue = new Queue<RoomInfo>();
     public List<Room> loadedRooms = new List<Room>();
     bool isLoadingRoom = false;
+    Room currRoom;
     public bool DoesRoomExist(int x, int y)
     {
         return loadedRooms.Find(item => item.X == x && item.Y == y) != null;
@@ -33,13 +34,13 @@ public class RoomController : MonoBehaviour
 
      void Start()
      {
-        LoadRoom("Start", 0, 0);
-        LoadRoom("Empty", 1, 0);
-        LoadRoom("Start", -1, 0);
-        LoadRoom("Start", 0, 1);
-        LoadRoom("Start", 0, -1);
+        //LoadRoom("Start", 0, 0);
+        //LoadRoom("Empty", 1, 0);
+        //LoadRoom("Empty", -1, 0);
+        //LoadRoom("Empty", 0, 1);
+        //LoadRoom("Empty", 0, -1);
 
-     }
+    }
 
     void Update()
     {
@@ -81,6 +82,10 @@ public class RoomController : MonoBehaviour
         room.name = currentWorldName + "-" + currentLoadRoomData.name + " " + room.X + ", " + room.Y;
         room.transform.parent = transform;
         isLoadingRoom = false;
+        if(loadedRooms.Count == 0)
+        {
+            CameraController.instance.currRoom = room;
+        }
         loadedRooms.Add(room);
     }
 
@@ -97,4 +102,9 @@ public class RoomController : MonoBehaviour
         loadRoomQueue.Enqueue(newRoomData);
     }
     
+    public void OnPlayerEnterRoom(Room room)
+    {
+        CameraController.instance.currRoom = room;
+        currRoom = room;
+    }
 }
