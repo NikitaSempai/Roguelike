@@ -144,6 +144,17 @@ public class RoomController : MonoBehaviour
         newRoomData.Y = y;
         loadRoomQueue.Enqueue(newRoomData);
     }
+
+    public string GetRandoomRoomName()
+    {
+        string[] possibleRooms = new string[]
+        {
+            "Empty",
+            "Basic",
+        };
+
+        return possibleRooms[Random.Range(0, possibleRooms.Length)];
+    }
     
     public void OnPlayerEnterRoom(Room room)
     {
